@@ -6,8 +6,8 @@ handles all of connections, creating new games and requests from the client(s).
 import socket
 import threading
 import time
-from .player import Player
-from .game import Game
+from player import Player
+from game import Game
 from queue import Queue
 import json
 
@@ -89,7 +89,7 @@ class Server(object):
                 
                 conn.sendall(json.dumps(send_msg))
             except Exception as e:
-                print(f"[EXECPTION] {player.get_name()} disconnected")
+                print('[EXECPTION]', player.get_name(), 'disconnected')
                 conn.close()
                 
 
@@ -112,7 +112,7 @@ class Server(object):
 
     def authentication(self,conn, addr):
         try:
-            data = conn.recv(16)
+            data = conn.recv(1024)
             name = str(data.decode())
             if not name:
                 raise Exception("No name received")
@@ -130,7 +130,7 @@ class Server(object):
     
 
     def connection_thread(self):
-        server = ""
+        server = "localhost"
         port = 5555
 
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -140,7 +140,7 @@ class Server(object):
         except socket.error as e:
             str(e)
             
-        s.listen()
+        s.listen(1)
         print('Waiting for a connection, server started')
 
         while True:

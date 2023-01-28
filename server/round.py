@@ -4,8 +4,7 @@ Represents a round of the game, storing things like word, time, skips, drawing p
 
 import time
 from _thread import *
-from .game import Game
-from .chat import Chat
+from chat import Chat
 
 class Round(object):
 
